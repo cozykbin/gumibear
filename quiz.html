@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SSAFY 구미 6반 | Quiz Runner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg1:#0c0f24; --bg2:#0a0d20; --text:#E8F1FF; --muted:#A6B2D8;
+      --c1:#8A7CFD; --c2:#00E1FF; --c3:#FF4ECD; --glass:rgba(255,255,255,0.10);
+      --shadow: rgba(0,0,0,0.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; color:var(--text);
+      font-family:"Pretendard", system-ui;
+      background:
+        radial-gradient(1000px 800px at 15% 25%, rgba(255,78,205,0.18), transparent 60%),
+        radial-gradient(1000px 800px at 85% 30%, rgba(0,225,255,0.15), transparent 60%),
+        linear-gradient(140deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+    header.nav{
+      position:fixed; top:16px; left:16px; right:16px; z-index:10;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 16px; border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border:1px solid rgba(255,255,255,0.16); backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; font-family:"Orbitron";}
+    .logo{width:36px;height:36px;border-radius:12px;background:conic-gradient(from 0deg, var(--c2), var(--c1), var(--c3));box-shadow:0 0 22px rgba(0,225,255,0.35)}
+    .links a{color:var(--text); text-decoration:none; font-weight:700; padding:8px 12px; border-radius:10px; background:var(--glass); border:1px solid rgba(255,255,255,0.18)}
+    main{padding-top:110px}
+    .wrap{width:min(900px, 92vw); margin:0 auto 60px;}
+    .title{
+      font-family:"Orbitron"; font-weight:900; letter-spacing:-0.02em; margin:0 0 16px;
+      font-size: clamp(26px, 4.0vw, 44px);
+      background: linear-gradient(90deg, #fff, var(--c2), var(--c1), var(--c3));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 8px 18px rgba(0,225,255,0.18));
+    }
+
+    .panel{
+      position:relative; border-radius:20px; overflow:hidden; min-height: 420px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border:1px solid rgba(255,255,255,0.16);
+      box-shadow: inset 0 0 40px rgba(0,225,255,0.06), 0 20px 60px var(--shadow);
+      padding: 18px;
+    }
+
+    .subjects{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px}
+    .chip{
+      font-size:12px; color:#d9e7ff; padding:8px 12px; border-radius:999px;
+      background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16);
+    }
+    .btn{padding:10px 14px; border-radius:12px; border:none; cursor:pointer; font-weight:800; color:#07121c;
+      background: linear-gradient(135deg, var(--c2), var(--c1) 60%, var(--c3));
+      box-shadow: 0 10px 24px rgba(0,225,255,0.20);
+    }
+    .btn.ghost{background:rgba(255,255,255,0.08); color:var(--text); border:1px solid rgba(255,255,255,0.18); box-shadow:none}
+    .btn-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+
+    .question{
+      margin-top:10px; padding:14px; border-radius:16px;
+      background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.16);
+    }
+    .question h3{margin:0 0 8px; font-size:18px}
+    .choices{list-style:none; margin:8px 0 0; padding:0; display:grid; gap:8px}
+    .choices label{
+      display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; cursor:pointer;
+      border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.06);
+    }
+    .choices input{accent-color: #00E1FF; transform: scale(1.2)}
+    .result{
+      margin-top:12px; padding:12px; border-radius:12px;
+      background:rgba(0,0,0,0.30); border:1px solid rgba(255,255,255,0.16); display:none;
+    }
+    .result.good{background: rgba(0, 255, 204, 0.08)}
+    .result.bad{background: rgba(255, 78, 205, 0.08)}
+
+    .scoreboard{
+      margin-top:16px; padding:12px; border-radius:14px; background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.16);
+    }
+    .muted{color:var(--muted)}
+    .hidden{display:none !important}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="brand"><div class="logo"></div><div>SSAFY 구미 6반 · Quiz</div></div>
+    <nav class="links">
+      <a href="page3.html">Portal</a>
+      <a href="page2.html">Class</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <h1 class="title" id="title">Y2K Quiz</h1>
+    <div class="panel">
+      <div class="subjects">
+        <span class="chip">과목:</span>
+        <button class="chip btn ghost" data-subject="web">Web</button>
+        <button class="chip btn ghost" data-subject="backend">Backend</button>
+        <button class="chip btn ghost" data-subject="ai">AI</button>
+      </div>
+
+      <div id="startBox">
+        <p class="muted">과목을 선택한 뒤 시작하세요. 10문항, 객관식.</p>
+        <div class="btn-row">
+          <button id="startBtn" class="btn">퀴즈 시작</button>
+        </div>
+      </div>
+
+      <div id="quizBox" class="hidden">
+        <div class="muted" id="progress">1 / 10</div>
+        <div class="question">
+          <h3 id="qText">질문</h3>
+          <ul class="choices" id="choices"></ul>
+        </div>
+        <div class="result" id="resultMsg"></div>
+        <div class="btn-row">
+          <button id="nextBtn" class="btn hidden">다음</button>
+        </div>
+      </div>
+
+      <div id="finishBox" class="hidden">
+        <h2>완료!</h2>
+        <div class="scoreboard">
+          <div id="scoreText"></div>
+        </div>
+        <div class="btn-row">
+          <button id="retryBtn" class="btn">다시 풀기</button>
+          <a href="page3.html" class="btn ghost">포털로</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Question banks (간단한 예시 — 원하시면 확장)
+    const BANK = {
+      web: {
+        title: 'Web',
+        questions: [
+          { q: '브라우저가 HTML을 파싱해 DOM 트리를 만드는 단계는?', choices: ['Loading → Parsing → Layout → Painting', 'Parsing → Loading → Painting → Layout', 'Layout → Parsing → Loading → Painting', 'Loading → Layout → Parsing → Painting'], a: 0 },
+          { q: 'HTML의 시맨틱 태크로 적절하지 않은 것은?', choices: ['<section>', '<div class="header">', '<article>', '<nav>'], a: 1 },
+          { q: 'CSS에서 반응형을 위한 미디어 쿼리 키워드는?', choices: ['@responsive', '@media', '@break', '@viewport'], a: 1 },
+          { q: '브라우저 렌더링 파이프라인 중 'Layout" 단계에서 계산되는 것은?', choices: ['페인팅 순서', '요소의 정확한 위치와 크기', '이벤트 루프', 'DOM 노드 생성'], a: 1 },
+          { q: 'CORS는 무엇의 약자이며 왜 필요한가?', choices: ['Cross Origin Resource Sharing / 교차출처资源共享', 'Cross Object Request Service / 서비스 분리', 'Client Oriented Resource Script / 성능최적화', 'Certificate Origin Resource Sharing / 보안'], a: 0 },
+          { q: 'Fetch API에서 HTTP 에러를 rejections로 처리하려면?', choices: ['fetch(url).catch', 'fetch(url).then(r => { if(!r.ok) throw r })', 'fetch(url).error', 'fetch(url).status'], a: 1 },
+          { q: '클로저(Closure)의 간단한 정의는?', choices: ['함수가 외부作用域의 변수를 기억하는現象', '함수가object를返回하는現象', '함수가class를생성하는現象', '함수가array를처리하는現象'], a: 0 },
+          { q: '웹 접근성(WCAG)에서 색상 대비 권장 비율은?', choices: ['2.5:1', '3.0:1', '4.5:1', '7.0:1'], a: 2 },
+          { q: 'React에서 useEffect의 기본 동작 시점은?', choices: ['컴포넌트마운트 후', '모든렌더링직후', '컴포넌트마운트 후 및 의존성변화 시', '언마운트 때만'], a: 2 },
+          { q: 'SPA 라우팅에서 히스토리 API가 제공하는 메서드는?', choices: ['history.pushState', 'router.navigate', 'window.navigate', 'document.route'], a: 0 },
+        ]
+      },
+      backend: {
+        title: 'Backend',
+        questions: [
+          { q: 'REST에서 CRUD와 매핑되는 HTTP 메서드가 아닌 것은?', choices: ['GET', 'POST', 'DELETE', 'PUSH'], a: 3 },
+          { q: 'JWT의 구성 요소가 아닌 것은?', choices: ['Header', 'Payload', 'Signature', 'Hash'], a: 3 },
+          { q: 'DB 트랜잭션의 ACID 중 Durability의 의미는?', choices: ['원자성', '일관성', '격리성', '영속성'], a: 3 },
+          { q: '인덱스(index)의主な목적은?', choices: ['저장공간절약', '조회속도향상', '테이블분할', '암호화'], a: 1 },
+          { q: '아래 중 CDN의 목적은?', choices: ['소스코드난독화', '정적자원의地理적캐시배포', 'DB쿼리최적화', '서버상태저장'], a: 1 },
+          { q: 'O(n log n) 정렬 알고리즘이 아닌 것은?', choices: [' mergesort', ' heapsort', ' quicksort(평균)', ' bubblesort'], a: 3 },
+          { q: '세션(session) 저장 위치로 부적합한 곳은?', choices: ['서버 메모리', '레디스', '쿠키(서명無)', '데이터베이스'], a: 2 },
+          { q: 'API 버전 관리 방법이 아닌 것은?', choices: ['URL경로 (/v1)', '헤더 (Accept: application/vnd...)', '쿼리 (?version=2)', '바디에版本필드'], a: 3 },
+          { q: '취약한 인증/인가 구현이 아닌 것은?', choices: ['평문비밀번호저장', '강한비밀번호해시(bcrypt)', '토큰無만료', '무조건 ROLE_ADMIN허용'], a: 1 },
+          { q: '클라우드 환경에서 스케일링 방식이 아닌 것은?', choices: ['수직', '수평', '캡슐', '오토'], a: 2 },
+        ]
+      },
+      ai: {
+        title: 'AI',
+        questions: [
+          { q: '、监督학습과 비감독학습의主な차이는?', choices: ['레이블有/無', '속도快/慢', '사용언어 JS/Python', 'GPU必/不必要'], a: 0 },
+          { q: '정규화(normalization)의 목적은?', choices: ['과적합방지', '배치사이즈결정', '레이블생성', '테스트데이터증가'], a: 0 },
+          { q: '오버피팅(과적합)의 징후는?', choices: ['훈련정확도↑/검증정확도↓', '훈련정확도↓/검증정확도↑', '훈련=검증', 'LR ثابت'], a: 0 },
+          { q: '백프로파게이션의日本語は?', choices: ['誤差逆伝播法', '勾配下降法', '確率的勾配降下法', '正則化'], a: 0 },
+          { q: '전형적인 ML 파이프라인 단계 순서는?', choices: ['데이터수집→전처리→모델훈련→평가→배포', '모델훈련→전처리→평가→배포→데이터수집', '평가→모델훈련→배포→전처리→수집', '배포→전처리→평가→훈련→수집'], a: 0 },
+          { q: 'LLM의샷 러닝(Few-shot) 설명으로 옳은 것은?', choices: ['학습데이터 없음', '몇 개의 예시만으로 과업 적응', '대용량 파라미터만으로 성능 향상', '강화된 정책학습'], a: 1 },
+          { q: '텍스트 임베딩(embedding)의 역할은?', choices: ['텍스트를벡터로변환', '이미지를압축', '오디오를시각화', '언어를번역'], a: 0 },
+          { q: '교차검증(k-fold cross-validation)의 主목적은?', choices: ['성능평가의안정화', '하이퍼파라미터조정', '데이터증가', 'GPU 할당'], a: 0 },
+          { q: 'RAG(Retrieval-Augmented Generation)의 구성 요소가 아닌 것은?', choices: ['리트리버', '벡터DB', '옵티마이저', ' генератор'], a: 2 },
+          { q: '데이터 누락(missing data) 처리 방법으로 부적합한 것은?', choices: ['평균/중위수대체', '최빈값대체', '행삭제', '임의의문자대체'], a: 3 },
+        ]
+      }
+    };
+
+    const qs = new URLSearchParams(location.search);
+    const subject = (qs.get('subject') || 'web').toLowerCase();
+    const $ = (sel)=> document.querySelector(sel);
+    const $$ = (sel)=> document.querySelectorAll(sel);
+
+    const titleEl = $('#title');
+    const startBox = $('#startBox');
+    const quizBox = $('#quizBox');
+    const finishBox = $('#finishBox');
+    const startBtn = $('#startBtn');
+    const nextBtn = $('#nextBtn');
+    const retryBtn = $('#retryBtn');
+    const progressEl = $('#progress');
+    const qText = $('#qText');
+    const choicesEl = $('#choices');
+    const resultMsg = $('#resultMsg');
+    const scoreText = $('#scoreText');
+
+    let pool = [];
+    let idx = 0;
+    let score = 0;
+    let selected = null;
+
+    function shuffle(arr){
+      for(let i=arr.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function loadSubject(sub){
+      const bank = BANK[sub] || BANK.web;
+      titleEl.textContent = `Quiz · ${bank.title}`;
+      pool = shuffle([...bank.questions]).slice(0, 10); // 10문항 랜덤
+    }
+
+    function renderQuestion(){
+      selected = null;
+      nextBtn.classList.add('hidden');
+      resultMsg.style.display = 'none';
+      const cur = pool[idx];
+      progressEl.textContent = `${idx+1} / ${pool.length}`;
+      qText.textContent = cur.q;
+      choicesEl.innerHTML = '';
+      cur.choices.forEach((choice, i)=>{
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <label>
+            <input type="radio" name="choice" value="${i}"/>
+            <span>${choice}</span>
+          </label>
+        `;
+        choicesEl.appendChild(li);
+      });
+    }
+
+    function showAnswer(){
+      const cur = pool[idx];
+      const radios = $$('input[name="choice"]');
+      radios.forEach((r, i)=>{
+        const label = r.closest('label');
+        if(i === cur.a){ label.style.borderColor = '#00E1FF'; label.style.background = 'rgba(0,225,255,0.10)'; }
+        if(r.checked && i !== cur.a){ label.style.borderColor = '#FF4ECD'; label.style.background = 'rgba(255,78,205,0.12)'; }
+      });
+      const isCorrect = (selected === cur.a);
+      resultMsg.textContent = isCorrect ? '정답입니다! Y2K 플럭스 ↑' : '아쉬워요 — 해설을メモ해두세요.';
+      resultMsg.className = 'result ' + (isCorrect ? 'good' : 'bad');
+      resultMsg.style.display = 'block';
+      nextBtn.classList.remove('hidden');
+    }
+
+    function next(){
+      idx++;
+      if(idx >= pool.length){
+        finish();
+      }else{
+        renderQuestion();
+      }
+    }
+
+    function finish(){
+      quizBox.classList.add('hidden');
+      finishBox.classList.remove('hidden');
+      scoreText.innerHTML = `점수: <b>${score}</b> / ${pool.length}<br/>${score >= pool.length*0.8 ? 'Amazing! 구미6반의 초지능은 이렇게 빛납니다.' : '좋은 시도! 복습하면 더 강해져요.'}`;
+    }
+
+    function start(){
+      startBox.classList.add('hidden');
+      quizBox.classList.remove('hidden');
+      idx = 0; score = 0;
+      renderQuestion();
+    }
+
+    // Subject chip click
+    $$('.chip[data-subject]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const sub = btn.dataset.subject;
+        loadSubject(sub);
+        const url = new URL(location.href);
+        url.searchParams.set('subject', sub);
+        history.replaceState({}, '', url.toString());
+      });
+    });
+
+    // Choices selection
+    choicesEl.addEventListener('change', (e)=>{
+      selected = parseInt(e.target.value, 10);
+    });
+
+    // Buttons
+    startBtn.addEventListener('click', start);
+    nextBtn.addEventListener('click', ()=>{
+      if(selected === null) { resultMsg.textContent = '선택지를 골라주세요.'; resultMsg.className='result'; resultMsg.style.display='block'; return; }
+      if(selected === pool[idx].a) score++;
+      showAnswer();
+    });
+    retryBtn.addEventListener('click', ()=>{
+      start();
+    });
+
+    // Load from query
+    loadSubject(subject);
+  </script>
+</body>
+</html>
