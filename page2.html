@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SSAFY 구미 6반 | Class Info</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg1:#0d1028; --bg2:#0a0d1d; --text:#E8F1FF; --muted:#A6B2D8;
+      --glass:rgba(255,255,255,0.10); --glass-2:rgba(255,255,255,0.16);
+      --c1:#8A7CFD; --c2:#00E1FF; --c3:#FF4ECD;
+      --shadow: rgba(0,0,0,0.38);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; color:var(--text);
+      font-family:"Pretendard", system-ui;
+      background:
+        radial-gradient(1000px 800px at 15% 25%, rgba(255,78,205,0.18), transparent 60%),
+        radial-gradient(1000px 800px at 85% 30%, rgba(0,225,255,0.15), transparent 60%),
+        linear-gradient(140deg, var(--bg1), var(--bg2));
+      min-height:100dvh;
+      overflow-x:hidden;
+    }
+    header.nav{
+      position:fixed; top:16px; left:16px; right:16px; z-index:10;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 16px; border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      border:1px solid rgba(255,255,255,0.16); backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; font-family:"Orbitron", system-ui;}
+    .logo{width:36px;height:36px;border-radius:12px;background:conic-gradient(from 0deg, var(--c2), var(--c1), var(--c3));box-shadow:0 0 22px rgba(0,225,255,0.35)}
+    .links a{color:var(--text); text-decoration:none; font-weight:700; padding:8px 12px; border-radius:10px; background:var(--glass); border:1px solid rgba(255,255,255,0.18)}
+    main{padding-top:110px}
+    .wrap{width:min(1100px, 92vw); margin:0 auto 60px;}
+
+    .hero{
+      display:grid; grid-template-columns: 1.1fr 1fr; gap:24px; align-items:center;
+    }
+    @media (max-width: 960px){ .hero{grid-template-columns:1fr} }
+
+    .title{
+      font-family:"Orbitron"; font-weight:900; letter-spacing:-0.02em;
+      font-size: clamp(28px, 4.5vw, 52px);
+      background: linear-gradient(90deg, #fff, var(--c2), var(--c1), var(--c3));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 8px 18px rgba(0,225,255,0.18));
+      margin: 6px 0 10px;
+    }
+    .subtitle{color:var(--muted); font-size:16px; line-height:1.8}
+
+    .panel{
+      position:relative; border-radius:24px; overflow:hidden; min-height:420px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border:1px solid rgba(255,255,255,0.18);
+      box-shadow: inset 0 0 40px rgba(0,225,255,0.06), 0 20px 60px var(--shadow);
+    }
+    .aurora{
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(30% 25% at 20% 30%, rgba(0,225,255,0.25), transparent 70%),
+        radial-gradient(25% 25% at 75% 35%, rgba(138,124,253,0.25), transparent 70%),
+        radial-gradient(30% 30% at 50% 70%, rgba(255,78,205,0.18), transparent 70%);
+      filter: blur(20px) saturate(160%);
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+    @keyframes drift{
+      0%{ transform: translateY(-10px) scale(1.0) }
+      100%{ transform: translateY(10px) scale(1.03) }
+    }
+
+    .glass{
+      position:absolute; inset:0; display:grid; place-items:center; padding:20px;
+    }
+    .stats{
+      display:grid; grid-template-columns: repeat(3,1fr); gap:12px; width:100%;
+    }
+    .card{
+      background: var(--glass); border:1px solid rgba(255,255,255,0.18); border-radius:16px;
+      padding:16px; backdrop-filter: blur(8px);
+    }
+    .card h3{margin:0 0 6px; font-size:14px; color:#cfe1ff}
+    .card p{margin:0; font-size:22px; font-weight:800}
+    .meta{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .chip{font-size:12px; color:#d9e7ff; padding:8px 10px; border-radius:999px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16)}
+
+    .section{margin-top: 40px}
+    .section h2{font-family:"Orbitron"; margin:0 0 14px; font-size:20px}
+    .grid{
+      display:grid; gap:16px; grid-template-columns: repeat(12, 1fr);
+    }
+    .feature{
+      grid-column: span 4; min-height:160px; border-radius:18px; overflow:hidden; position:relative;
+      background:linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border:1px solid rgba(255,255,255,0.16);
+    }
+    @media (max-width: 1100px){ .feature{grid-column: span 6} }
+    @media (max-width: 720px){ .feature{grid-column: span 12} }
+    .feature .bg{
+      position:absolute; inset:0; opacity:.5; filter: blur(18px);
+      background:
+        radial-gradient(60% 70% at 30% 30%, rgba(0,225,255,0.35), transparent 70%),
+        radial-gradient(60% 70% at 70% 50%, rgba(138,124,253,0.35), transparent 70%),
+        radial-gradient(60% 70% at 50% 80%, rgba(255,78,205,0.30), transparent 70%);
+    }
+    .feature .inner{position:relative; padding:16px 16px 18px}
+    .feature h3{margin:0 0 6px; font-size:16px}
+    .feature p{margin:0; color:var(--muted); line-height:1.7}
+
+    .timeline{
+      display:grid; gap:16px; grid-template-columns: repeat(12,1fr);
+      position:relative;
+    }
+    .milestone{
+      grid-column: span 4; border-radius:16px; padding:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.05));
+      border:1px solid rgba(255,255,255,0.16);
+    }
+    @media (max-width: 960px){ .milestone{grid-column: span 6} }
+    @media (max-width: 620px){ .milestone{grid-column: span 12} }
+    .milestone h4{margin:0 0 6px}
+    .milestone p{margin:0; color:var(--muted)}
+
+    .cta{display:flex; gap:12px; margin-top:16px; flex-wrap:wrap}
+    .btn{padding:12px 16px; border-radius:14px; border:1px solid rgba(255,255,255,0.18); background:rgba(255,255,255,0.10); color:var(--text); text-decoration:none; font-weight:800}
+    .btn.grad{
+      background: linear-gradient(135deg, var(--c2), var(--c1) 60%, var(--c3));
+      border: none; color: #07121c;
+      box-shadow: 0 12px 30px rgba(0,225,255,0.24);
+    }
+
+    footer{text-align:center; color:var(--muted); font-size:12px; padding:40px 0 50px}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="brand"><div class="logo"></div><div>SSAFY 구미 6반 · Class Info</div></div>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="page3.html">Quiz Portal</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <div class="title">구미 6반, Y2K a.m. Aesthetic</div>
+        <div class="subtitle">
+          구미공주들
+        </div>
+        <div class="cta">
+          <a class="btn grad" href="page3.html">퀴즈 포털 바로가기</a>
+          <a class="btn" href="#features">특징 보러가기</a>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="aurora"></div>
+        <div class="glass">
+          <div class="stats">
+            <div class="card">
+              <h3>교육생</h3>
+              <p>30+</p>
+              <div class="meta">
+                <span class="chip">실무형</span><span class="chip">자율형</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>트랙</h3>
+              <p>웹/백엔드/AI</p>
+              <div class="meta"><span class="chip">Full-Stack</span></div>
+            </div>
+            <div class="card">
+              <h3>모토</h3>
+              <p>Make it glow</p>
+              <div class="meta"><span class="chip">Y2K</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <h2>왜 구미 6반인가</h2>
+      <div class="grid">
+        <div class="feature">
+          <div class="bg"></div>
+          <div class="inner">
+            <h3>합성 가능한 설계</h3>
+            <p>모듈 간 결합도는 낮추고, 재사용성은 높인다. 컴포넌트 사고로 문제해결.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="bg"></div>
+          <div class="inner">
+            <h3>프레젠스-first</h3>
+            <p>결과보다 과정, 기록보다 페르소나. 명확한 의사소통, 예쁜 화면.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="bg"></div>
+          <div class="inner">
+            <h3>리스크 헤지</h3>
+            <p>테스트 먼저, 배포 먼저. 실패를 안전하게 대비하는 운영 원칙.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="bg"></div>
+          <div class="inner">
+            <h3>데이터 드리븐</h3>
+            <p>가설 → 실험 → 피드백. 감으로 하지 않는다. 숫자로 말한다.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="bg"></div>
+          <div class="inner">
+            <h3>가독성 최우선</h3>
+            <p>코드는詩, 이름은 설명서. 누가 봐도 읽히는 설계를 지향한다.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="bg"></div>
+          <div class="inner">
+            <h3>미래 친화적</h3>
+            <p>Y2K 감성 × 모던 UX.技術과審美의 교집합을 만든다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>이 반의 타임라인</h2>
+      <div class="timeline">
+        <div class="milestone">
+          <h4>Orientation</h4>
+          <p>목표 수립, 팀 identidade, 툴체인 세팅. 브랜딩 też.</p>
+        </div>
+        <div class="milestone">
+          <h4>Foundations</h4>
+          <p>CS 핵심, 웹 플랫폼, 클린 아키텍처. TDD로 안전하게.</p>
+        </div>
+        <div class="milestone">
+          <h4>Production</h4>
+          <p>실 서비스 수준 배포. CI/CD, 모니터링, 장애 대응 시뮬.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>커리큘럼 스냅샷</h2>
+      <div class="grid">
+        <div class="feature">
+          <div class="bg"></div>
+          <div class="inner">
+            <h3>Web / Frontend</h3>
+            <p>웹 표준, 반응형, 상태관리, 접근성, 디자인 시스템.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="bg"></div>
+          <div class="inner">
+            <h3>Backend / Server</h3>
+            <p>API, DB, 캐시/큐, 보안, 스케일링, 이벤트驱动아키텍처.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="bg"></div>
+          <div class="inner">
+            <h3>AI / Data</h3>
+            <p>데이터 전처리, ML 파이프라인, LLM 앱Prototyping.</p>
+          </div>
+        </div>
+      </div>
+      <div class="cta">
+        <a class="btn grad" href="page3.html">과목별 퀴즈 시작</a>
+        <a class="btn" href="index.html">메인으로</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 2025 SSAFY 구미 6반 · Designed with Y2K Aura</footer>
+</body>
+</html>
