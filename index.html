@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SSAFY 구미 6반 | Y2K 초지능 구미베어</title>
+  <meta name="description" content="SSAFY 구미 6반을 상징하는 미래지향적 Y2K 감성의 인터랙티브 3D 구미베어" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg-1: #0b1020;
+      --bg-2: #121032;
+      --text: #E9F0FF;
+      --muted: #A7B3D1;
+      --accent-1: #8A7CFD;
+      --accent-2: #00E1FF;
+      --accent-3: #FF4ECD;
+      --glass: rgba(255,255,255,0.08);
+      --glass-2: rgba(255,255,255,0.14);
+      --shadow: rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: "Pretendard", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 15% 20%, #1b1060 0%, transparent 70%),
+                  radial-gradient(1000px 700px at 85% 30%, #003e6a 0%, transparent 70%),
+                  linear-gradient(140deg, var(--bg-1), var(--bg-2));
+      overflow-x: hidden;
+    }
+    .aurora {
+      position: fixed; inset: 0; pointer-events: none; z-index: -1;
+      background: conic-gradient(from 120deg at 50% 50%, rgba(138,124,253,0.14), rgba(0,225,255,0.12), rgba(255,78,205,0.14), rgba(138,124,253,0.14));
+      filter: blur(50px) saturate(160%);
+      animation: swirl 18s linear infinite;
+      opacity: 0.6;
+    }
+    @keyframes swirl { to { transform: rotate(360deg); } }
+
+    header.nav {
+      position: fixed; top: 16px; left: 16px; right: 16px; z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -0.02em;
+      font-family: "Orbitron", system-ui;
+    }
+    .brand .logo {
+      width: 36px; height: 36px; border-radius: 12px;
+      background: radial-gradient(circle at 30% 30%, #00E1FF, #8A7CFD 40%, #FF4ECD 80%);
+      box-shadow: 0 0 20px rgba(0,225,255,0.35), inset 0 0 20px rgba(255,78,205,0.35);
+    }
+    .links { display: flex; gap: 10px; }
+    .links a {
+      color: var(--text); text-decoration: none; font-weight: 600;
+      padding: 8px 12px; border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      transition: 0.2s ease;
+    }
+    .links a:hover { transform: translateY(-1px); background: rgba(255,255,255,0.16); }
+
+    main {
+      padding-top: 110px;
+      display: grid; place-items: center;
+      min-height: 100dvh;
+    }
+    .hero {
+      width: min(1100px, 92vw);
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; padding-top: 20px; }
+    }
+    .copy h1 {
+      margin: 0 0 10px;
+      font-family: "Orbitron", system-ui;
+      font-weight: 900; font-size: clamp(28px, 4.8vw, 56px);
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #fff, #00E1FF, #8A7CFD, #FF4ECD);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      filter: drop-shadow(0 6px 18px rgba(0,225,255,0.2));
+    }
+    .copy p {
+      color: var(--muted); font-size: clamp(14px, 1.7vw, 18px);
+      line-height: 1.8; margin: 10px 0 18px;
+    }
+    .cta {
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .btn {
+      appearance: none; border: none; cursor: pointer;
+      padding: 12px 18px; border-radius: 14px; font-weight: 800;
+      letter-spacing: 0.01em; color: #06101a;
+      background: linear-gradient(135deg, #00E1FF, #8A7CFD 60%, #FF4ECD);
+      box-shadow: 0 12px 30px rgba(0,225,255,0.22);
+      transition: transform .18s ease, box-shadow .2s ease;
+    }
+    .btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 18px 40px rgba(255,78,205,0.26); }
+    .btn.ghost {
+      background: rgba(255,255,255,0.08); color: var(--text);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: none;
+    }
+    .scene-wrap {
+      position: relative; width: 100%; aspect-ratio: 1.4/1; min-height: 460px;
+      border-radius: 24px;
+      background: radial-gradient(120% 80% at 50% 50%, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.14);
+      overflow: hidden;
+      box-shadow: inset 0 0 60px rgba(0,225,255,0.05), 0 20px 60px var(--shadow);
+      backdrop-filter: blur(6px);
+    }
+    canvas#webgl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .hud {
+      position: absolute; left: 16px; bottom: 16px; z-index: 3;
+      background: var(--glass); border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 14px; padding: 10px 12px; color: var(--muted);
+      backdrop-filter: blur(8px); font-size: 13px;
+    }
+    .hint {
+      position: absolute; right: 16px; bottom: 16px; z-index: 3;
+      color: #d7e7ff; font-size: 12px; opacity: 0.9;
+      background: rgba(0,0,0,0.25); padding: 8px 10px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+    }
+    .scanlines::after {
+      content:""; position: absolute; inset: 0; pointer-events: none;
+      background: repeating-linear-gradient(transparent, transparent 2px, rgba(255,255,255,0.04) 3px, transparent 4px);
+      mix-blend-mode: overlay; opacity: .25;
+    }
+    .footer {
+      text-align: center; color: var(--muted); font-size: 12px;
+      padding: 30px 0 40px; opacity: 0.9;
+    }
+  </style>
+</head>
+<body class="scanlines">
+  <div class="aurora"></div>
+
+  <header class="nav">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>SSAFY 구미 6반 · Y2K LAB</div>
+    </div>
+    <nav class="links" aria-label="메인">
+      <a href="page2.html">Class Info</a>
+      <a href="page3.html">Quiz Portal</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="copy">
+        <h1>초지능 구미베어 · Future Core</h1>
+        <p>
+          SSAFY 구미 6반의 상징 — 미래형 에이전트형 구미베어입니다.
+          마우스로 만져보세요. 회전/스핀/플럭스. Y2K 오로라와 네온이 기억을 비추고,
+          구미의 지능은 빛의 구면으로 증류됩니다.
+        </p>
+        <div class="cta">
+          <a class="btn" href="page2.html">구미 6반 정보</a>
+          <a class="btn ghost" href="page3.html">퀴즈 포털</a>
+        </div>
+      </div>
+      <div class="scene-wrap" id="scene-wrap" aria-label="3D 구미베어 상호작용 영역">
+        <canvas id="webgl"></canvas>
+        <div class="hud">드래그: 회전 / 휠/터치: 줌 / 더블클릭: 플럭스</div>
+        <div class="hint">Y2K Fluorescent Mode</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer">© 2025 SSAFY 구미 6반 · Designed with Y2K Aura</div>
+
+  <script type="module">
+    import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+    import { OrbitControls } from 'https://unpkg.com/three@0.160.0/examples/jsm/controls/OrbitControls.js';
+    import { EffectComposer } from 'https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js';
+    import { GSAP } from 'https://cdn.jsdelivr.net/npm/gsap@3.12.5/+esm';
+
+    // Basic Setup
+    const canvas = document.getElementById('webgl');
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 200);
+    camera.position.set(0, 0.4, 5.2);
+
+    const controls = new OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.rotateSpeed = 0.7;
+    controls.minDistance = 3.2;
+    controls.maxDistance = 8.0;
+
+    // Lights
+    const hemi = new THREE.HemisphereLight(0x88ccff, 0x222233, 0.7);
+    scene.add(hemi);
+    const key = new THREE.DirectionalLight(0xffffff, 0.85);
+    key.position.set(4, 5, 2);
+    scene.add(key);
+    const rim = new THREE.PointLight(0x8A7CFD, 1.2, 10, 2.0);
+    rim.position.set(-2.5, 0.5, -2.5);
+    scene.add(rim);
+
+    // Postprocessing
+    const composer = new EffectComposer(renderer);
+    composer.addPass(new RenderPass(scene, camera));
+    const bloom = new UnrealBloomPass(new THREE.Vector2(canvas.clientWidth, canvas.clientHeight), 0.9, 0.8, 0.2);
+    composer.addPass(bloom);
+
+    // Futuristic GumiBear - modified sphere "AI Core"
+    const baseGeo = new THREE.IcosahedronGeometry(1.4, 6);
+
+    const bearMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uMouse: { value: new THREE.Vector2() },
+        uHover: { value: 0.0 },
+        uBaseColor: { value: new THREE.Color('#7DF9FF') }, // neon cyan
+        uAccent1: { value: new THREE.Color('#8A7CFD') },
+        uAccent2: { value: new THREE.Color('#FF4ECD') },
+      },
+      vertexShader: `
+        uniform float uTime;
+        uniform vec2 uMouse;
+        uniform float uHover;
+        varying vec3 vPos;
+        varying vec3 vNormal;
+        varying float vEdge;
+
+        // lightweight pseudo noise
+        float n3(vec3 p){
+          return sin(p.x*2.1 + uTime*0.8)*0.5 + sin(p.y*3.3 - uTime*0.6)*0.3 + sin(p.z*1.7 + uTime*1.1)*0.2;
+        }
+
+        void main(){
+          vPos = position;
+          vNormal = normal;
+
+          // aurora displacement
+          float disp = n3(normalize(position)*1.2) * 0.14;
+          vec3 p = position + normal * disp;
+
+          // "bear ears" as twin bulges near top
+          float top = smoothstep(0.2, 0.95, normal.y);
+          float earL = smoothstep(0.34, 0.0, length(position.xy - vec2(-0.45, 0.65)));
+          float earR = smoothstep(0.34, 0.0, length(position.xy - vec2( 0.45, 0.65)));
+          float ears = (earL + earR) * top * 0.55;
+
+          // "snout" soft protrusion at front
+          float snout = smoothstep(0.0, 0.6, dot(normalize(position), vec3(0.0, -0.1, 1.0))) * 0.35;
+
+          // mouse interaction bulge
+          vec3 m = vec3(uMouse, 0.0);
+          float mouseDist = length(position - m);
+          float push = smoothstep(0.55, 0.0, mouseDist) * 0.35;
+
+          p += normal * (ears + snout + push * (0.6 + uHover*0.8));
+
+          // edge glow hint via normal.z threshold
+          vEdge = pow(max(0.0, normal.z), 2.0);
+
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+        }
+      `,
+      fragmentShader: `
+        precision highp float;
+        uniform float uTime;
+        uniform vec3 uBaseColor;
+        uniform vec3 uAccent1;
+        uniform vec3 uAccent2;
+        uniform float uHover;
+        varying vec3 vPos;
+        varying vec3 vNormal;
+        varying float vEdge;
+
+        // Y2K neon palette mix
+        vec3 palette(float t, vec3 a, vec3 b, vec3 c, vec3 d){
+          return a + b*cos(6.28318*(c*t + d));
+        }
+
+        void main(){
+          float t = uTime*0.2;
+          float p = 0.5 + 0.5*sin( (vPos.y*2.5 + vPos.x*1.7) + uTime*1.3 );
+          float ring = smoothstep(0.35, 0.0, abs(fract(vPos.y*2.0 + t)*2.0-1.0));
+
+          vec3 aurora = palette(p,
+            vec3(0.45,0.50,0.68),
+            vec3(0.35,0.25,0.45),
+            vec3(1.0,0.7,0.4),
+            vec3(0.0,0.15,0.25)
+          );
+
+          vec3 col = mix(uBaseColor, uAccent1, ring*0.6);
+          col = mix(col, uAccent2, p*0.35 + vEdge*0.35);
+          col += aurora * (0.18 + 0.35*ring + 0.25*vEdge);
+
+          // subtle inner glow when hovered
+          col += vec3(0.25,0.32,0.40) * uHover * 0.25;
+
+          gl_FragColor = vec4(col, 1.0);
+        }
+      `,
+      transparent: false
+    });
+
+    const bearMesh = new THREE.Mesh(baseGeo, bearMaterial);
+    scene.add(bearMesh);
+
+    // Futuristic rings/halo
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x8A7CFD, transparent: true, opacity: 0.28 });
+    const ring1 = new THREE.Mesh(new THREE.TorusGeometry(2.1, 0.02, 16, 200), ringMat);
+    const ring2 = new THREE.Mesh(new THREE.TorusGeometry(2.1, 0.02, 16, 200), new THREE.MeshBasicMaterial({ color: 0x00E1FF, transparent: true, opacity: 0.22 }));
+    ring2.rotation.x = Math.PI/2;
+    scene.add(ring1, ring2);
+
+    // Orbit guide
+    const guide = new THREE.LineLoop(
+      new THREE.BufferGeometry().setFromPoints(new Array(128).fill(0).map((_,i)=>{
+        const a = i/128 * Math.PI*2;
+        return new THREE.Vector3(Math.cos(a)*2.2, 0, Math.sin(a)*2.2);
+      })),
+      new THREE.LineBasicMaterial({ color: 0x2A2F55, transparent: true, opacity: 0.5 })
+    );
+    scene.add(guide);
+
+    // Interaction
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    let isPointerDown = false;
+    let moved = 0;
+    let lastPointer = { x: 0, y: 0 };
+    let autoSpin = 0.004;
+    let hovered = false;
+
+    function getNDC(evt){
+      const rect = canvas.getBoundingClientRect();
+      const x = ( (evt.clientX - rect.left) / rect.width ) * 2 - 1;
+      const y = -( (evt.clientY - rect.top) / rect.height ) * 2 + 1;
+      return { x, y };
+    }
+    function updateMouseUniform(ndc){
+      // convert NDC to world-ish z=0 plane near sphere
+      const v = new THREE.Vector3(ndc.x, ndc.y, 0.5).unproject(camera);
+      const dir = v.sub(camera.position).normalize();
+      const dist = 2.5;
+      const point = camera.position.clone().add(dir.multiplyScalar(dist));
+      bearMaterial.uniforms.uMouse.value.copy(point.multiplyScalar(0.35));
+    }
+
+    canvas.addEventListener('pointerdown', (e)=>{
+      isPointerDown = true; moved = 0; lastPointer.x = e.clientX; lastPointer.y = e.clientY;
+    });
+    canvas.addEventListener('pointerup', ()=>{
+      isPointerDown = false; if (moved < 5) onDoubleClick();
+    });
+    canvas.addEventListener('pointermove', (e)=>{
+      const ndc = getNDC(e);
+      updateMouseUniform(ndc);
+      if (isPointerDown){
+        const dx = e.clientX - lastPointer.x;
+        const dy = e.clientY - lastPointer.y;
+        moved += Math.hypot(dx,dy);
+      }
+    });
+    canvas.addEventListener('wheel', (e)=>{
+      e.preventDefault();
+      const dz = Math.sign(e.deltaY) * 0.25;
+      camera.position.z = THREE.MathUtils.clamp(camera.position.z + dz, 2.5, 9.0);
+    }, { passive: false });
+    window.addEventListener('dblclick', onDoubleClick);
+
+    function onDoubleClick(){
+      // Y2K Flux burst
+      GSAP.to(bearMaterial.uniforms, { uHover: 1.0, duration: 0.3, ease: "power2.out", yoyo: true, repeat: 1 });
+      GSAP.to(ring1.rotation, { y: "+=3.14159*2", duration: 0.8, ease: "power2.inOut" });
+      GSAP.to(ring2.rotation, { y: "-=3.14159*2", duration: 0.8, ease: "power2.inOut" });
+      autoSpin = 0.025;
+      setTimeout(()=> autoSpin = 0.004, 1100);
+    }
+
+    // Resize
+    function resize(){
+      const w = canvas.clientWidth || canvas.parentElement.clientWidth;
+      const h = canvas.clientHeight || canvas.parentElement.clientHeight;
+      renderer.setSize(w, h, false);
+      composer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    new ResizeObserver(resize).observe(canvas.parentElement);
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Animate
+    const clock = new THREE.Clock();
+    function animate(){
+      const t = clock.getElapsedTime();
+      bearMaterial.uniforms.uTime.value = t;
+
+      // idle wobble
+      bearMesh.rotation.y += autoSpin;
+      bearMesh.rotation.x = Math.sin(t*0.7)*0.08;
+
+      // hover detection (soft)
+      raycaster.setFromCamera(mouse, camera);
+      const hits = raycaster.intersectObject(bearMesh, false);
+      const nowHover = hits.length > 0;
+      if (nowHover !== hovered){
+        hovered = nowHover;
+        GSAP.to(bearMaterial.uniforms.uHover, { value: hovered ? 0.7 : 0.0, duration: 0.25 });
+        canvas.style.cursor = hovered ? 'grab' : 'default';
+      }
+
+      // ring rotations
+      ring1.rotation.x += 0.003;
+      ring2.rotation.z -= 0.0025;
+
+      controls.update();
+      composer.render();
+      requestAnimationFrame(animate);
+    }
+    // init mouse uniform center
+    mouse.set(999,999);
+    animate();
+  </script>
+</body>
+</html>
